@@ -1,0 +1,63 @@
+USE hotel_db;
+
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS rooms;
+
+CREATE TABLE rooms (
+    room_id INT PRIMARY KEY,
+    room_type VARCHAR(20),
+    price DOUBLE,
+    status VARCHAR(10)
+);
+
+CREATE TABLE bookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT,
+    customer_name VARCHAR(50),
+    check_in DATE,
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id)
+);
+
+INSERT INTO rooms VALUES
+(101, 'Single', 1500, 'AVAILABLE'),
+(102, 'Double', 2500, 'AVAILABLE'),
+(103, 'Deluxe', 4000, 'AVAILABLE'),
+(104, 'Suite', 6000, 'AVAILABLE');
+
+
+
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    phone VARCHAR(15),
+    email VARCHAR(50),
+    id_proof VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE bookings
+ADD FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
+SHOW TABLES;
+DESC customers;
+DESC bookings;
+
+INSERT INTO customers (name, phone, email, id_proof)
+VALUES ('Muniyappan', '9876543210', 'muniyappan@gmail.com', 'Aadhaar');
+SELECT * FROM customers;
+
+USE hotel_db;
+
+DROP TABLE IF EXISTS bookings;
+
+CREATE TABLE bookings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  guest VARCHAR(100) NOT NULL,
+  room VARCHAR(20) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE bookings
+ADD COLUMN check_in DATE,
+ADD COLUMN check_out DATE;
+
